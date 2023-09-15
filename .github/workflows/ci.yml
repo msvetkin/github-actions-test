@@ -9,6 +9,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
+        include:
+          - os: ubuntu-latest
+            preset: x64-linux-gcc-dynamic
+            compiler: gcc-13
 
     steps:
     - uses: actions/checkout@v4
+
+    - uses: ./.github/actions/install-dependencies
+      with:
+        preset: ${{matrix.preset}}
+        compiler: ${{matrix.compiler}}

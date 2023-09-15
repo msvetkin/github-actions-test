@@ -1,0 +1,45 @@
+name: Install dependencies
+
+inputs:
+  preset:
+    description: 'cmake preset'
+    required: true
+    default: ""
+  compiler:
+    description: 'gcc-13 and etc'
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Parse preset
+      id: preset
+      shell: bash
+      run: |
+        IFS='-' read -r arch os compiler linkage <<< "${{ inputs.preset }}"
+        echo "arch=$arch" >> "$GITHUB_OUTPUT"
+        echo "os=$os" >> "$GITHUB_OUTPUT"
+        echo "compiler=$compiler" >> "$GITHUB_OUTPUT"
+
+    - name: Select dependencies
+      shell: bash
+      run: |
+        echo "Test: ${{ steps.preset.outputs.os }}"
+        mkdir -p ./.selected-dependencies &&
+        cat <<EOF >./.selected-dependencies/action.yml
+        runs:
+          using: composite
+          steps:
+            - name: Install base dependencies ${{ runner.os }}
+              uses: ./.github/actions/${{ steps.preset.outputs.os }}/base
+        EOF
+
+    - name: Install
+      id: install
+      uses: ./.selected-dependencies
+
+    - name: Cleanup
+      if: always()
+      shell: bash
+      run: rm -rf ./.selected-dependencies
