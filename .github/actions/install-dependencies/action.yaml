@@ -5,8 +5,8 @@ inputs:
     description: 'cmake preset'
     required: true
     default: ""
-  compiler:
-    description: 'gcc-13 and etc'
+  compiler_version:
+    description: 'g++-11 and etc'
     required: false
     default: ""
 
@@ -20,7 +20,7 @@ runs:
         IFS='-' read -r arch os compiler linkage <<< "${{ inputs.preset }}"
         echo "arch=$arch" >> "$GITHUB_OUTPUT"
         echo "os=$os" >> "$GITHUB_OUTPUT"
-        echo "compiler=$compiler" >> "$GITHUB_OUTPUT"
+        echo "compiler=$compiler-${{ inputs.compiler_version }}" >> "$GITHUB_OUTPUT"
 
     - name: Select dependencies
       shell: bash
@@ -33,6 +33,8 @@ runs:
           steps:
             - name: Install base dependencies ${{ runner.os }}
               uses: ./.github/actions/${{ steps.preset.outputs.os }}/base
+            - name: Install compiler
+              uses: ./.github/actions/${{ steps.preset.outputs.os }}/${{ steps.preset.outputs.compiler }}
         EOF
 
     - name: Install

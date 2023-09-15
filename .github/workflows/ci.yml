@@ -12,7 +12,7 @@ jobs:
         include:
           - os: ubuntu-latest
             preset: x64-linux-gcc-dynamic
-            compiler: gcc-13
+            compiler_version: 11
 
     steps:
     - uses: actions/checkout@v4
@@ -20,4 +20,4 @@ jobs:
     - uses: ./.github/actions/install-dependencies
       with:
         preset: ${{matrix.preset}}
-        compiler: ${{matrix.compiler}}
+        compiler_version: ${{matrix.compiler_version}}
