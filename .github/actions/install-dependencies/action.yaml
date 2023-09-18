@@ -5,10 +5,6 @@ inputs:
     description: 'cmake preset'
     required: true
     default: ""
-  compiler_version:
-    description: 'g++-11 and etc'
-    required: false
-    default: ""
 
 runs:
   using: composite
@@ -18,9 +14,8 @@ runs:
       shell: bash
       run: |
         IFS='-' read -r arch os compiler linkage <<< "${{ inputs.preset }}"
-        echo "arch=$arch" >> "$GITHUB_OUTPUT"
         echo "os=$os" >> "$GITHUB_OUTPUT"
-        echo "compiler=$compiler-${{ inputs.compiler_version }}" >> "$GITHUB_OUTPUT"
+        echo "compiler=$compiler" >> "$GITHUB_OUTPUT"
 
     - name: Select dependencies
       shell: bash

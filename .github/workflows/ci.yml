@@ -12,7 +12,6 @@ jobs:
         include:
           - os: ubuntu-latest
             preset: x64-linux-gcc-dynamic
-            compiler_version: 11
 
     steps:
     - uses: actions/checkout@v4
@@ -20,4 +19,8 @@ jobs:
     - uses: ./.github/actions/install-dependencies
       with:
         preset: ${{matrix.preset}}
-        compiler_version: ${{matrix.compiler_version}}
+
+    - name: CMake workflow
+      shell: bash
+      run: |
+        cmake --workflow --preset ${{matrix.preset}}

@@ -1,8 +1,10 @@
-name: "Linux dependencies"
+name: "Ubuntu base dependencies"
 
 runs:
   using: "composite"
   steps:
-    - name: Install system package dependencies via apt
+    - name: Install system dependencies
       shell: bash
-      run: sudo apt-get install -y ninja-build
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
