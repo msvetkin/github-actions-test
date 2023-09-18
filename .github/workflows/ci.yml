@@ -10,7 +10,9 @@ jobs:
       matrix:
         target: [
           { os: ubuntu-latest, preset: x64-linux-gcc-dynamic },
-          { os: ubuntu-latest, preset: x64-linux-clang-dynamic }
+          { os: ubuntu-latest, preset: x86-linux-gcc-dynamic },
+          { os: ubuntu-latest, preset: x64-linux-clang-dynamic },
+          { os: ubuntu-latest, preset: x86-linux-clang-dynamic },
         ]
 
     steps:
