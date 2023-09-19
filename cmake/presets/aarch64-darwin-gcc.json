@@ -1,0 +1,119 @@
+{
+  "version": 6,
+  "include": [
+    "base.json",
+    "os/darwin.json",
+    "compilers/gcc.json"
+  ],
+  "configurePresets": [
+    {
+      "name": "aarch64-darwin-gcc-static",
+      "inherits": [
+        "base",
+        "aarch64-darwin",
+        "gcc"
+      ],
+      "displayName": "aarch64 darwin gcc static libs"
+    },
+    {
+      "name": "aarch64-darwin-gcc-dynamic",
+      "inherits": "aarch64-darwin-gcc-static",
+      "displayName": "aarch64 darwin gcc dynamic libs",
+      "cacheVariables": {
+        "BUILD_SHARED_LIBS": true
+      }
+    },
+    {
+      "name": "aarch64-darwin-gcc",
+      "inherits": "aarch64-darwin-gcc-dynamic",
+      "displayName": "alias to aarch64-darwin-gcc-dynamic"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "aarch64-darwin-gcc-static",
+      "inherits": "base",
+      "configurePreset": "aarch64-darwin-gcc-static"
+    },
+    {
+      "name": "aarch64-darwin-gcc-dynamic",
+      "inherits": "base",
+      "configurePreset": "aarch64-darwin-gcc-dynamic"
+    },
+    {
+      "name": "aarch64-darwin-gcc",
+      "inherits": "aarch64-darwin-gcc-dynamic",
+      "configurePreset": "aarch64-darwin-gcc"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "aarch64-darwin-gcc-static",
+      "inherits": "base",
+      "configurePreset": "aarch64-darwin-gcc-static"
+    },
+    {
+      "name": "aarch64-darwin-gcc-dynamic",
+      "inherits": "base",
+      "configurePreset": "aarch64-darwin-gcc-dynamic"
+    },
+    {
+      "name": "aarch64-darwin-gcc",
+      "inherits": "aarch64-darwin-gcc-dynamic",
+      "configurePreset": "aarch64-darwin-gcc"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "aarch64-darwin-gcc-static",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-darwin-gcc-static"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-darwin-gcc-static"
+        },
+        {
+          "type": "test",
+          "name": "aarch64-darwin-gcc-static"
+        }
+      ]
+    },
+    {
+      "name": "aarch64-darwin-gcc-dynamic",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-darwin-gcc-dynamic"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-darwin-gcc-dynamic"
+        },
+        {
+          "type": "test",
+          "name": "aarch64-darwin-gcc-dynamic"
+        }
+      ]
+    },
+    {
+      "name": "aarch64-darwin-gcc",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "aarch64-darwin-gcc"
+        },
+        {
+          "type": "build",
+          "name": "aarch64-darwin-gcc"
+        },
+        {
+          "type": "test",
+          "name": "aarch64-darwin-gcc"
+        }
+      ]
+    }
+  ]
+}
