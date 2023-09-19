@@ -3,35 +3,7 @@
 
 include_guard(GLOBAL)
 
-include(GNUInstallDirs)
-
-# global target
-add_library(ght INTERFACE)
-add_library(ght::ght ALIAS ght)
-install(TARGETS ght EXPORT ght-targets)
-
-# local build
-export(EXPORT ght-targets NAMESPACE ght::)
-configure_file("cmake/ght-config.cmake" "." COPYONLY)
-
-include(CMakePackageConfigHelpers)
-write_basic_package_version_file(
-  ght-config-version.cmake COMPATIBILITY SameMajorVersion
-)
-
-# installation
-install(
-  EXPORT ght-targets
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ght
-  NAMESPACE ght::
-)
-
-install(
-  FILES cmake/ght-config.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/ght-config-version.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/ght-config-version.cmake
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ght
-)
+include(set_ght_target_properties)
 
 # sets all nessary default things
 function(add_ght_module module_name)
@@ -48,6 +20,8 @@ function(add_ght_module module_name)
     set(module_type "PUBLIC")
   endif()
 
+  set_ght_target_properties(${module_target} ${module_type})
+
   target_include_directories(
     ${module_target} ${module_type}
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -57,10 +31,11 @@ function(add_ght_module module_name)
 
   target_link_libraries(${module_target} ${module_type})
 
-  install(TARGETS ${module_target} EXPORT ght-targets)
-  install(DIRECTORY include/ght/${module_name} TYPE INCLUDE)
-
-  target_link_libraries(ght INTERFACE ${module_target})
+  if (TARGET ght)
+    target_link_libraries(ght INTERFACE ${module_target})
+    install(TARGETS ${module_target} EXPORT ght-targets)
+    install(DIRECTORY include/ght/${module_name} TYPE INCLUDE)
+  endif()
 
   set(ght_module_target
       ${module_target}

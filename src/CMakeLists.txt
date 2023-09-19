@@ -11,6 +11,7 @@ project(
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+include(ght-install-targets)
 include(add_ght_module)
 include(add_ght_executable)
 
