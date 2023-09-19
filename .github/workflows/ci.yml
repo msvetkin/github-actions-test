@@ -15,6 +15,8 @@ jobs:
           { os: ubuntu-latest, preset: x86-linux-clang-dynamic },
           { os: macos-latest, preset: x64-darwin-gcc-dynamic },
           { os: macos-latest, preset: x64-darwin-clang-dynamic },
+          { os: macos-latest, preset: arm64-darwin-gcc-dynamic },
+          { os: macos-latest, preset: arm64-darwin-clang-dynamic },
         ]
 
     steps:
