@@ -1,8 +1,10 @@
-// SPDX-FileCopyrightText: Copyright 2023 Mikhail Svetkin
-// SPDX-License-Identifier: MIT
+#include "ght/core/version.hpp"
 
-#include "cpp-project-template/core/optional.hpp"
+#include <fmt/core.h>
 
-int main() {
+int main(int /*argc*/, char * /*argv*/ []) {
+  fmt::print("ght version: {}\n", ght::core::version());
+
   return 0;
+
 }
