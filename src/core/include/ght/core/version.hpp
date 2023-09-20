@@ -1,6 +1,12 @@
-// SPDX-FileCopyrightText: Copyright 2023 Mikhail Svetkin
-// SPDX-License-Identifier: MIT
+#pragma once
+
+#include "ght/core/export.hpp"
+
+#include <string>
 
 namespace ght::core {
+
+[[nodiscard]] GHT_CORE_EXPORT std::string version() noexcept;
+
 
 } // namespace ght::core

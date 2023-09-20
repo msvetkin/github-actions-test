@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: Copyright 2023 Mikhail Svetkin
-# SPDX-License-Identifier: MIT
-
 include_guard(GLOBAL)
 
 include(GNUInstallDirs)
@@ -28,4 +25,3 @@ install(
         ${CMAKE_CURRENT_BINARY_DIR}/ght-config-version.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ght
 )
-
